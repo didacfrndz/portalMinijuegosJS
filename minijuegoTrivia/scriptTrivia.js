@@ -158,18 +158,16 @@ function mostrarPregunta(pos) {
             // Marcar correcta/incorrecta
             let acierto = false;
             if (idx === preguntaObj.correcta) {
-                btn.classList.add('btn-success');
-                acierto = true;
+            btn.classList.add('btn-success');
+            acierto = true;
             } else {
-                btn.classList.add('btn-danger');
-                // Resaltar la correcta
-                respuestasContainer.children[preguntaObj.correcta].classList.add('btn-success');
+            btn.classList.add('btn-danger');
+            // Resaltar la correcta
+            respuestasContainer.children[preguntaObj.correcta].classList.add('btn-success');
             }
-            // Espera un momento y luego mueve al jugador
-            setTimeout(() => {
-                moverJugador(acierto);
-                actualizarPosiciones();
-            }, 900);
+            
+            moverJugador(acierto);
+            actualizarPosiciones();
         });
         respuestasContainer.appendChild(btn);
     });
@@ -187,11 +185,23 @@ function moverJugador(acierto) {
     } else {
         posicionJugador = Math.max(1, posicionJugador - 1);
     }
+    if (posicionJugador >= 20) {
+        reiniciarJuego();
+    }
 }
 
 // Mostrar la primera pregunta al cargar
 mostrarPregunta(posicionPregunta);
 actualizarPosiciones();
+
+function reiniciarJuego() {
+    if (posicionJugador >= 20) {
+        botonDado.textContent = 'Reiniciar';
+        botonDado.classList.remove("btn-outline-primary");
+        botonDado.classList.add("rojo");
+    }
+
+}
 
 //Lógica del dado y avance
 botonDado.addEventListener("click", function() {
