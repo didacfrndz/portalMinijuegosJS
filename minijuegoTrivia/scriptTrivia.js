@@ -111,21 +111,22 @@ const botonDado = document.querySelector('.btn-outline-primary.btn-sm');
 const progresoTexto = document.querySelector('.d-flex.justify-content-between.text-muted.mb-2 span:last-child');
 const progresoBarra = document.querySelector('.progress-fill');
 
-//Variable para controlar si ya se ha respondido la pregunta
+// NUEVO: Variable para controlar si ya se ha respondido la pregunta
 let preguntaRespondida = false;
 
 // Variables para la posición del jugador
-let posicionJugador = 0; // Puedes inicializar según tu lógica de tablero
+let posicionJugador = 1; // Puedes inicializar según tu lógica de tablero
 
 // Elementos para mostrar la posición del jugador
 const jugadorPosicion = document.querySelectorAll('.player-position')[0];
 const jugadorCasilla = document.querySelectorAll('.badge-outline')[0];
 const turnoBadge = document.querySelector('.badge-primary');
 
-
+// Actualiza visualmente la posición del jugador
 function actualizarPosiciones() {
     jugadorPosicion.querySelector('span').textContent = posicionJugador;
     jugadorCasilla.textContent = `Casilla ${posicionJugador}`;
+    // Cambia el color de jugador activo
     jugadorPosicion.classList.add('player-active');
     jugadorPosicion.classList.remove('player-inactive');
     turnoBadge.textContent = 'Turno: Jugador';
@@ -133,22 +134,22 @@ function actualizarPosiciones() {
     turnoBadge.classList.remove('badge-secondary');
 }
 
-// Funcion para mostrar la pregunta actual
+// Funció per mostrar la pregunta i les seves respostes
 function mostrarPregunta(pos) {
     const preguntaObj = preguntesMatematica[pos];
     if (!preguntaObj) return;
     preguntaCard.textContent = preguntaObj.pregunta;
     respuestasContainer.innerHTML = '';
-    preguntaRespondida = false; // Permitir responder de nuevo
+    preguntaRespondida = false; // Permetre respondre la nova pregunta
 
-    // Mostrar respuestas
+    // Mostrar respostes
     preguntaObj.respostes.forEach((respuesta, idx) => {
         const letra = ['A', 'B', 'C'][idx];
         const btn = document.createElement('button');
         btn.className = 'btn answer-btn w-100';
         btn.innerHTML = `<span class="answer-letter">${letra})</span> ${respuesta}`;
         btn.disabled = false;
-        // Evento para seleccionar resposta
+        // Evento para seleccionar respuesta
         btn.addEventListener('click', function () {
             if (preguntaRespondida) return;
             preguntaRespondida = true;
@@ -164,12 +165,19 @@ function mostrarPregunta(pos) {
                 // Resaltar la correcta
                 respuestasContainer.children[preguntaObj.correcta].classList.add('btn-success');
             }
-            
+            // Espera un momento y luego mueve al jugador
+            setTimeout(() => {
+                moverJugador(acierto);
+                actualizarPosiciones();
+            }, 900);
         });
         respuestasContainer.appendChild(btn);
     });
 
-    
+    // Actualizar progreso
+    const porcentaje = Math.round(((pos + 1) / preguntesMatematica.length) * 100);
+    if (progresoTexto) progresoTexto.textContent = `${porcentaje}%`;
+    if (progresoBarra) progresoBarra.style.width = `${porcentaje}%`;
 }
 
 // Mueve al jugador según si acierta o falla
@@ -179,17 +187,6 @@ function moverJugador(acierto) {
     } else {
         posicionJugador = Math.max(1, posicionJugador - 1);
     }
-    // Comprobar si el jugador ha llegado o superado la casilla 20
-    if (posicionJugador >= 20) {
-        finalizarJuego();
-    }
-}
-
-//Función para finalizar el juego
-function finalizarJuego() {
-        botonDado.textContent = 'Reiniciar';
-        botonDado.classList.remove("btn-outline-primary");
-        botonDado.classList.add("rojo");
 }
 
 // Mostrar la primera pregunta al cargar
@@ -205,14 +202,8 @@ botonDado.addEventListener("click", function() {
         botonDado.textContent = '🎲 Tirar dado';
         botonDado.classList.remove("rojo");
         botonDado.classList.add("btn-outline-primary");
-        botonDado.disabled = false; // Habilitar dado si se reinicia
-        posicionJugador = 1; // Reiniciar posición del jugador
-        actualizarPosiciones();
         return;
     }
-
-    // Si el juego ya terminó, no hacer nada
-    if (posicionJugador >= 20) return;
 
     let valorDado = Math.floor(Math.random() * 6 + 1);
     dadoSpan.textContent = valorDado;
