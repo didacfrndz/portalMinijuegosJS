@@ -114,42 +114,24 @@ const progresoBarra = document.querySelector('.progress-fill');
 // NUEVO: Variable para controlar si ya se ha respondido la pregunta
 let preguntaRespondida = false;
 
-// Variables para las posiciones de los jugadores
-let posicionJugador1 = 4; // Puedes inicializar según tu lógica de tablero
-let posicionJugador2 = 2;
-let turnoJugador = 1; // 1 o 2
+// Variables para la posición del jugador
+let posicionJugador = 1; // Puedes inicializar según tu lógica de tablero
 
-// Elementos para mostrar la posición de los jugadores
-const jugador1Posicion = document.querySelectorAll('.player-position')[0];
-const jugador2Posicion = document.querySelectorAll('.player-position')[1];
-const jugador1Casilla = document.querySelectorAll('.badge-outline')[0];
-const jugador2Casilla = document.querySelectorAll('.badge-outline')[1];
+// Elementos para mostrar la posición del jugador
+const jugadorPosicion = document.querySelectorAll('.player-position')[0];
+const jugadorCasilla = document.querySelectorAll('.badge-outline')[0];
 const turnoBadge = document.querySelector('.badge-primary');
 
-// Actualiza visualmente la posición de los jugadores
+// Actualiza visualmente la posición del jugador
 function actualizarPosiciones() {
-    jugador1Posicion.querySelector('span').textContent = posicionJugador1;
-    jugador2Posicion.querySelector('span').textContent = posicionJugador2;
-    jugador1Casilla.textContent = `Casilla ${posicionJugador1}`;
-    jugador2Casilla.textContent = `Casilla ${posicionJugador2}`;
+    jugadorPosicion.querySelector('span').textContent = posicionJugador;
+    jugadorCasilla.textContent = `Casilla ${posicionJugador}`;
     // Cambia el color de jugador activo
-    if (turnoJugador === 1) {
-        jugador1Posicion.classList.add('player-active');
-        jugador1Posicion.classList.remove('player-inactive');
-        jugador2Posicion.classList.add('player-inactive');
-        jugador2Posicion.classList.remove('player-active');
-        turnoBadge.textContent = 'Turno: Jugador 1';
-        turnoBadge.classList.add('badge-primary');
-        turnoBadge.classList.remove('badge-secondary');
-    } else {
-        jugador2Posicion.classList.add('player-active');
-        jugador2Posicion.classList.remove('player-inactive');
-        jugador1Posicion.classList.add('player-inactive');
-        jugador1Posicion.classList.remove('player-active');
-        turnoBadge.textContent = 'Turno: Jugador 2';
-        turnoBadge.classList.add('badge-secondary');
-        turnoBadge.classList.remove('badge-primary');
-    }
+    jugadorPosicion.classList.add('player-active');
+    jugadorPosicion.classList.remove('player-inactive');
+    turnoBadge.textContent = 'Turno: Jugador';
+    turnoBadge.classList.add('badge-primary');
+    turnoBadge.classList.remove('badge-secondary');
 }
 
 // Funció per mostrar la pregunta i les seves respostes
@@ -167,7 +149,7 @@ function mostrarPregunta(pos) {
         btn.className = 'btn answer-btn w-100';
         btn.innerHTML = `<span class="answer-letter">${letra})</span> ${respuesta}`;
         btn.disabled = false;
-        // NUEVO: Evento para seleccionar respuesta
+        // Evento para seleccionar respuesta
         btn.addEventListener('click', function () {
             if (preguntaRespondida) return;
             preguntaRespondida = true;
@@ -183,10 +165,9 @@ function mostrarPregunta(pos) {
                 // Resaltar la correcta
                 respuestasContainer.children[preguntaObj.correcta].classList.add('btn-success');
             }
-            // Espera un momento y luego mueve al jugador y cambia turno
+            // Espera un momento y luego mueve al jugador
             setTimeout(() => {
                 moverJugador(acierto);
-                cambiarTurno();
                 actualizarPosiciones();
             }, 900);
         });
@@ -201,24 +182,11 @@ function mostrarPregunta(pos) {
 
 // Mueve al jugador según si acierta o falla
 function moverJugador(acierto) {
-    if (turnoJugador === 1) {
-        if (acierto) {
-            posicionJugador1 += 5;
-        } else {
-            posicionJugador1 = Math.max(1, posicionJugador1 - 1);
-        }
+    if (acierto) {
+        posicionJugador += 5;
     } else {
-        if (acierto) {
-            posicionJugador2 += 5;
-        } else {
-            posicionJugador2 = Math.max(1, posicionJugador2 - 1);
-        }
+        posicionJugador = Math.max(1, posicionJugador - 1);
     }
-}
-
-// Cambia el turno al otro jugador
-function cambiarTurno() {
-    turnoJugador = turnoJugador === 1 ? 2 : 1;
 }
 
 // Mostrar la primera pregunta al cargar
