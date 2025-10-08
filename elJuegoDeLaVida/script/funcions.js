@@ -51,7 +51,7 @@ function creaMatriu(columnes, files) {
     return matriu;
 }
 //test para ver si la funcion funciona correctamente
-const matriu = creaMatriu(5, 5);
+const matriu = creaMatriu(100, 100);
 console.log(matriu);
 
 //funcion para imprimir la matriz en el html
