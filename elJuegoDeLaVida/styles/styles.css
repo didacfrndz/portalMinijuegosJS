@@ -1,11 +1,8 @@
-div{
-    border: 1px solid black;
-}
 .celula{
     width: 50px;
     height: 50px;
     flex: 1;
-    border: 1px solid black;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,9 +16,9 @@ div{
     flex-direction: column;
     gap: 0;
 }
-.box-matriu.viva {
+.celula.viva {
     background-color: blue;
 }
-.box-matriu.muerta {
+.celula.muerta {
     background-color: black;
 }

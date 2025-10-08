@@ -62,7 +62,7 @@ function dibuixaUniversAmbEstat(matriu) {
         html += '<div class="fila">';
         for (let j = 0; j < matriu[i].length; j++) {
             const estado = matriu[i][j] ? 'viva' : 'muerta';
-            html += `<div class="celula box-matriu ${estado}" data-id="${i}-${j}"></div>`;
+            html += `<div class="celula celula-matriu ${estado}" data-id="${i}-${j}"></div>`;
         }
         html += '</div>';
     }
