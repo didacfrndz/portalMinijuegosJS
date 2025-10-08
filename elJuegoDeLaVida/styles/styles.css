@@ -19,3 +19,9 @@ div{
     flex-direction: column;
     gap: 0;
 }
+.box-matriu.viva {
+    background-color: blue;
+}
+.box-matriu.muerta {
+    background-color: black;
+}
