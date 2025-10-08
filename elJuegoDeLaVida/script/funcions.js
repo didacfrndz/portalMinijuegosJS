@@ -71,3 +71,66 @@ function dibuixaUniversAmbEstat(matriu) {
 //test para ver si la funcion funciona correctamente
 dibuixaUniversAmbEstat(matriu);
 
+
+//funcion para contar las celulas vivas alrededor de una celula dada
+function comptarVeinsVius(matriu, x, y) {
+    //contador de cuantos vecinos vivos hay
+    let contador = 0;
+    //bucle para recorrer las 8 posiciones alrededor de la celula dada
+    // i y j van de -1 a 1 para cubrir todas las posiciones alrededor de la celula central
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            if (i === 0 && j === 0) {
+                continue; // saltar de celula ya que es la celula central
+            }
+            // calcular las nuevas coordenadas
+            const nuevaX = x + i;
+            const nuevaY = y + j;
+            // comprobar que las coordenadas estan dentro de los limites de la matriz
+            if (nuevaX >= 0 && nuevaX < matriu.length && nuevaY >= 0 && nuevaY < matriu[0].length) {
+                if (matriu[nuevaX][nuevaY]) {
+                    // si la celula en la nueva posicion es viva, incrementar el contador
+                    contador++;
+                }
+            }
+        }
+    }
+    //devolver el numero de vecinos vivos
+    return contador;
+}
+//test para ver si la funcion funciona correctamente
+console.log("Vecinos vivos alrededor de (1,1): " + comptarVeinsVius(matriu, 1, 1));
+console.log("Vecinos vivos alrededor de (0,0): " + comptarVeinsVius(matriu, 0, 0));
+console.log("Vecinos vivos alrededor de (4,4): " + comptarVeinsVius(matriu, 4, 4));
+
+
+//funcion para evolucionar las celulas vivas segun las reglas del juego de la vida
+function evolucionar(matriu, x,y) {
+    const vecinosVivos = comptarVeinsVius(matriu, x, y);
+    if (matriu[x][y]) {
+        // Regla de solitud, si una celula viva tiene menos de 2 vecinos vivos, muere
+        if (vecinosVivos < 2) {
+            return false;
+        }
+        //Regla viva, si una celula viva tiene 2 o 3 vecinos vivos, sigue viva
+        if (vecinosVivos === 2 || vecinosVivos === 3) {
+            return true;
+        }
+        //Regla de sobrepoblacion, si una celula viva tiene mas de 3 vecinos vivos, muere
+        if (vecinosVivos > 3) {
+            return false;
+        }
+    } else {
+        //Regla de reproduccion, si una celula muerta tiene exactamente 3 vecinos vivos, nace
+        if (vecinosVivos === 3) {
+            return true;
+        }
+
+    }
+    //si no se cumple ninguna regla, la celula muere o sigue muerta
+    return false;
+}
+//test para ver si la funcion funciona correctamente
+console.log("Evolucion de la celula (1,1): " + evolucionar(matriu, 1, 1));
+console.log("Evolucion de la celula (0,0): " + evolucionar(matriu, 0, 0));
+console.log("Evolucion de la celula (4,4): " + evolucionar(matriu, 4, 4));
