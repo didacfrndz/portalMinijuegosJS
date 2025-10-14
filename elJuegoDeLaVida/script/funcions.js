@@ -1,3 +1,6 @@
+
+
+
 //funcion para dibujar el universo
 function dibuixaUnivers(columnes, files) {
     //agarramos el div univers
@@ -136,7 +139,7 @@ console.log("Evolucion de la celula (0,0): " + evolucionar(matriu, 0, 0));
 console.log("Evolucion de la celula (4,4): " + evolucionar(matriu, 4, 4));
 
 //funcion para crear una nueva matriz evolucionada a partir de la matriz actual
-function novaGeneracio(matriu) {
+function crearMatriuEvolucionada(matriu) {
     const novaMatriu = [];
     for (let i = 0; i < matriu.length; i++) {
         const novaFila = [];
@@ -148,7 +151,7 @@ function novaGeneracio(matriu) {
     return novaMatriu;
 }
 //test para ver si la funcion funciona correctamente
-const novaMatriu = novaGeneracio(matriu);
+const novaMatriu = crearMatriuEvolucionada(matriu);
 console.log("Matriz original:");
 console.log(matriu);
 console.log("Nueva matriz evolucionada:");
@@ -167,3 +170,24 @@ function copiaMatriu(matriu, novaMatriu) {
 copiaMatriu(matriu, novaMatriu);
 console.log("Matriz original despues de copiar la nueva matriz:");
 console.log(matriu);
+
+//implementacion completa del juego 
+
+//inicializamos la matriz
+let matriuActual = creaMatriu(300, 300);
+//dibujamos la matriz inicial
+dibuixaUniversAmbEstat(matriuActual);
+
+//evolucion de la matriz
+crearMatriuEvolucionada(matriuActual);
+//dibujamos la nueva matriz
+dibuixaUniversAmbEstat(matriuActual);
+
+//animacuion del juego
+setInterval(() => {
+    const novaMatriu = crearMatriuEvolucionada(matriuActual);
+    copiaMatriu(matriuActual, novaMatriu);
+    dibuixaUniversAmbEstat(matriuActual);
+}, 250);
+
+//test para ver si la funcion funciona correctamente
