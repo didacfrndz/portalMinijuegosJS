@@ -1,3 +1,4 @@
+
 const glider = [
     [false, true, false],
     [false, false, true],
@@ -14,5 +15,12 @@ const toad = [
     [false, true, true, true],
     [true, true, true, false]
 ];
+//patron exploder
+const exploder = [
+    [false, true, false, true, false],
+    [true, true, true, true, true],
+    [false, true, false, true, false]
+];
 
-export { glider, blinker, toad };
+//exportamos los patrones
+export { glider, blinker, toad, exploder };

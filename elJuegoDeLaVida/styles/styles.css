@@ -1,6 +1,6 @@
 .celula{
-    width: 5px;
-    height: 5px;
+    width: 8px;
+    height: 8px;
     flex: 1;
     
     display: flex;
@@ -17,7 +17,7 @@
     gap: 0;
 }
 .celula.viva {
-    background-color: blue;
+    background-color: lightblue;
 }
 .celula.muerta {
     background-color: black;

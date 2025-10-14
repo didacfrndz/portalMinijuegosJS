@@ -1,4 +1,5 @@
-
+//exportamos los patrones prediseñados
+import { glider, blinker, toad, exploder } from './patrones.js';
 
 
 //funcion para dibujar el universo
@@ -174,7 +175,7 @@ console.log(matriu);
 //implementacion completa del juego 
 
 //inicializamos la matriz
-let matriuActual = creaMatriu(300, 300);
+let matriuActual = creaMatriu(100, 100);
 //dibujamos la matriz inicial
 dibuixaUniversAmbEstat(matriuActual);
 
@@ -188,6 +189,5 @@ setInterval(() => {
     const novaMatriu = crearMatriuEvolucionada(matriuActual);
     copiaMatriu(matriuActual, novaMatriu);
     dibuixaUniversAmbEstat(matriuActual);
-}, 250);
+}, 500);
 
-//test para ver si la funcion funciona correctamente
