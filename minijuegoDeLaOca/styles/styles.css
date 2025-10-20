@@ -1,0 +1,9 @@
+.tablero{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 80%;
+    border: 1px solid #000;
+    margin: 20px auto;
+    background-color: #f0f0f0;
+}
