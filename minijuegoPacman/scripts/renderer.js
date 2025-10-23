@@ -1,6 +1,6 @@
 // Importo el array de enemigos
 import { enemigos } from './enemy.js';
-
+import { player } from './player.js';
 // Esta es la matriz inicial (tablero de juego)
 const matriz = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -34,27 +34,36 @@ function imprimirMatriz(matriz) {
     // Selecciona el contenedor donde se imprimirá la matriz
     const divmatriz = document.getElementById('gameContainer');
     
-    // Limpia el contenedor antes de imprimir la matriz
-    divmatriz.innerHTML = ''; 
+    // Crea una cadena HTML completa
+    let matrizHTML = '';
     
     // Recorre las filas de la matriz
     for (let fila = 0; fila < matriz.length; fila++) {
-        let filaHTML = '<div class="fila-matriz">';
+        matrizHTML += '<div class="fila-matriz">';
         
         // Recorre las columnas de cada fila
         for (let columna = 0; columna < matriz[fila].length; columna++) {
             // Muestra los enemigos (usamos 'E' para indicar la posición de un enemigo)
             if (matriz[fila][columna] === 'E') {
-                filaHTML += `<div class="box-matriz enemigo">🛸</div>`;  // Usamos un ícono de nave, pero puedes usar cualquier cosa
+                matrizHTML += `<div class="box-matriz enemigo">🛸</div>`;  // Usamos un ícono de nave, pero puedes usar cualquier cosa
             } else {
-                filaHTML += `<div class="box-matriz">${matriz[fila][columna]}</div>`;
+                matrizHTML += `<div class="box-matriz">${matriz[fila][columna]}</div>`;
             }
         }
 
-        filaHTML += '</div>';
-        divmatriz.innerHTML += filaHTML; 
+        matrizHTML += '</div>';
     }
+    
+    // Actualiza el contenido de una sola vez
+    divmatriz.innerHTML = matrizHTML;
 }
 
 // Llama a la función para imprimir la matriz
+
+
+//ahora añadiremos a padman a la matriz y la imprimiremos
+if (player.vivo) {
+    matriz[player.f][player.c] = '😊'; // emoji representa a Pacman
+}
 imprimirMatriz(matriz);
+
