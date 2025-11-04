@@ -36,3 +36,20 @@ const casillas = [
   { id: 35, estado: 'basico', x: null, y: null },
   { id: 36, estado: 'final', x: null, y: null }
 ];
+const dado1 = document.getElementById('dado1');
+const dado2 = document.getElementById('dado2');
+const btnDado1 = document.getElementById('btnDado1');
+const btnDado2 = document.getElementById('btnDado2');
+// logica dado jugador 1 y mostrar resultado
+btnDado1.addEventListener('click', () => {
+  const resultadoDado1 = Math.floor(Math.random() * 6) + 1;
+  dado1.textContent = `${resultadoDado1}`;
+  
+}
+);
+btnDado2.addEventListener('click', () => {
+  const resultadoDado2 = Math.floor(Math.random() * 6) + 1;
+  dado2.textContent = `${resultadoDado2}`;
+}
+);  
+// logica dado jugador 2 y mostrar resultado
